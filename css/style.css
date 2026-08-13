@@ -214,12 +214,9 @@ header nav {
 }
 
 header nav .logo-1 {
-    width: 50px;
+    width: 60px;
     transition: var(--transition);
-}
-
-header nav .logo-1:hover {
-    transform: scale(1.1);
+    cursor: default;
 }
 
 .links {
@@ -623,65 +620,12 @@ header nav .logo-1:hover {
     display: flex;
     gap: 60px;
     align-items: center;
-}
-
-.about-image {
-    flex: 1;
-    position: relative;
-    display: flex;
     justify-content: center;
-    max-width: 350px;
 }
 
-.image-frame {
-    position: relative;
+.about-text {
+    max-width: 1000px;
     width: 100%;
-    aspect-ratio: 3/4;
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-
-.image-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--radius);
-}
-
-.frame-corner {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--primary);
-    z-index: 2;
-}
-
-.frame-corner.tl {
-    top: -5px;
-    left: -5px;
-    border-right: none;
-    border-bottom: none;
-}
-
-.frame-corner.tr {
-    top: -5px;
-    right: -5px;
-    border-left: none;
-    border-bottom: none;
-}
-
-.frame-corner.bl {
-    bottom: -5px;
-    left: -5px;
-    border-right: none;
-    border-top: none;
-}
-
-.frame-corner.br {
-    bottom: -5px;
-    right: -5px;
-    border-left: none;
-    border-top: none;
 }
 
 .about-text {
@@ -1040,119 +984,6 @@ header nav .logo-1:hover {
     gap: 10px;
 }
 
-.courses {
-    padding: 100px 0;
-}
-
-.courses-intro {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.courses-intro p:first-child {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 12px;
-}
-
-.courses-intro p:last-child {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-size: 15px;
-}
-
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-
-.course-card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.course-card::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--primary), var(--secondary));
-    transform: scaleY(0);
-    transition: transform 0.3s;
-}
-
-.course-card:hover::before {
-    transform: scaleY(1);
-}
-
-.course-card:hover {
-    border-color: var(--border-hover);
-    transform: translateX(5px);
-    background: var(--bg-card-hover);
-}
-
-.course-number {
-    font-size: 24px;
-    font-weight: 900;
-    color: rgba(255, 152, 0, 0.2);
-    min-width: 40px;
-    transition: var(--transition);
-}
-
-.course-card:hover .course-number {
-    color: var(--primary);
-}
-
-.course-content {
-    flex: 1;
-}
-
-.course-content h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.course-card>i {
-    font-size: 20px;
-    color: var(--primary);
-    opacity: 0.6;
-    transition: var(--transition);
-}
-
-.course-card:hover>i {
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-.course-capstone {
-    grid-column: span 3;
-    background: linear-gradient(135deg,
-            rgba(255, 152, 0, 0.1) 0%,
-            rgba(0, 229, 255, 0.05) 100%);
-    border-color: rgba(255, 152, 0, 0.3);
-}
-
-.course-capstone .course-number {
-    color: var(--primary);
-}
-
 .contact {
     padding: 100px 0;
     background: linear-gradient(180deg,
@@ -1506,7 +1337,33 @@ body[dir="rtl"] .footer-links ul li a:hover {
     transform: translateX(-5px);
 }
 
-@media (max-width: 1024px) {
+
+/* Accessibility: Focus styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: #000;
+    padding: 8px 16px;
+    z-index: 10000;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+@media (max-width: 1075px) {
     .section-header h2 {
         font-size: 36px;
     }
@@ -1544,10 +1401,6 @@ body[dir="rtl"] .footer-links ul li a:hover {
     .about-content {
         flex-direction: column;
         gap: 40px;
-    }
-
-    .about-image {
-        max-width: 280px;
     }
 
     .skills-grid {
@@ -1617,14 +1470,21 @@ body[dir="rtl"] .footer-links ul li a:hover {
 
     .mobile-logo,
     #logoToggle {
-        display: block;
+        pointer-events: none !important;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: default !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         margin-bottom: 20px;
         padding: 0 16px;
     }
 
     .mobile-logo .logo-1,
     #logoToggle .logo-1 {
-        width: 45px;
+        width: 60px;
     }
 
     .icon_menu {
@@ -1699,13 +1559,7 @@ body[dir="rtl"] .footer-links ul li a:hover {
         grid-template-columns: 1fr;
     }
 
-    .courses-grid {
-        grid-template-columns: 1fr;
-    }
 
-    .course-capstone {
-        grid-column: span 1;
-    }
 
     .about-info-grid {
         grid-template-columns: 1fr;
@@ -1771,16 +1625,9 @@ body[dir="rtl"] .footer-links ul li a:hover {
         border: 1px solid var(--border);
     }
 
-    .mobile-logo,
-    #logoToggle {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0 16px;
-    }
-
     .mobile-logo .logo-1,
     #logoToggle .logo-1 {
-        width: 45px;
+        width: 55px;
     }
 
     .icon_menu {
@@ -1917,9 +1764,6 @@ body[dir="rtl"] .footer-links ul li a:hover {
         font-size: 18px;
     }
 
-    .courses-intro {
-        padding: 24px;
-    }
 
     .courses-intro p:first-child {
         font-size: 16px;
@@ -1954,7 +1798,6 @@ body[dir="rtl"] .footer-links ul li a:hover {
     .skills,
     .services,
     .projects,
-    .courses,
     .contact {
         padding: 60px 0;
     }
