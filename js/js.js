@@ -61,9 +61,20 @@ window.addEventListener('scroll', () => {
 
 const navLinks = document.getElementById('links');
 
+function closeMenuOnNav() {
+    // Only close menu and restore scroll if menu is actually open (mobile)
+    if (navLinks.classList.contains('Acteve')) {
+        navLinks.classList.remove('Acteve');
+        document.body.style.overflow = '';
+    }
+}
+
 function toggleMenu() {
     navLinks.classList.toggle('Acteve');
-    document.body.style.overflow = navLinks.classList.contains('Acteve') ? 'hidden' : '';
+    // Only lock scroll when opening menu on mobile, not when clicking nav links
+    if (window.innerWidth <= 1024) {
+        document.body.style.overflow = navLinks.classList.contains('Acteve') ? 'hidden' : '';
+    }
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -108,8 +119,8 @@ window.addEventListener('scroll', updateActiveNav);
 const typingElement = document.querySelector('.typing-text');
 if (typingElement) {
     const texts = {
-        en: ['Frontend Developer', 'React Developer', 'UI/UX Designer', 'Web Developer'],
-        ar: ['مطور واجهات أمامية', 'مطور React', 'مصمم UI/UX', 'مطور ويب']
+        en: ['Frontend Developer', 'React Developer', 'Web Developer'],
+        ar: ['مطور واجهات أمامية', 'مطور React', 'مطور ويب']
     };
 
     let textIndex = 0;
