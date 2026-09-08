@@ -232,3 +232,48 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('scroll', revealOnScroll);
+
+// Projects carousel
+(function () {
+    var track = document.getElementById('projectsTrack');
+    if (!track) return;
+    var cards = track.querySelectorAll('.project-card');
+    var prevBtn = document.getElementById('projPrev');
+    var nextBtn = document.getElementById('projNext');
+    var dots = document.querySelectorAll('#projectDots .dot');
+    var current = 0;
+
+    function update() {
+        cards.forEach(function (card, i) {
+            card.classList.toggle('active', i === current);
+        });
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle('active', i === current);
+        });
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === cards.length - 1;
+    }
+
+    prevBtn.addEventListener('click', function () {
+        if (current > 0) {
+            current--;
+            update();
+        }
+    });
+
+    nextBtn.addEventListener('click', function () {
+        if (current < cards.length - 1) {
+            current++;
+            update();
+        }
+    });
+
+    dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+            current = parseInt(dot.getAttribute('data-index'), 10);
+            update();
+        });
+    });
+
+    update();
+})();
